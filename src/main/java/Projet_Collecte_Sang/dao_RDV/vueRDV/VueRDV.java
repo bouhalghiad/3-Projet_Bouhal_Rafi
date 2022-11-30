@@ -1,4 +1,4 @@
-package Projet_Collecte_Sang.dao_LieuCollecte.vueLieuCollecte;
+package Projet_Collecte_Sang.dao_RDV.vueRDV;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -11,9 +11,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-import Projet_Collecte_Sang.dao_LieuCollecte.vueLieuCollecte.actionEvent;
-import Projet_Collecte_Sang.dao_LieuCollecte.controleurLieuCollecte.ControleurLieuCollecte;
-import Projet_Collecte_Sang.dao_LieuCollecte.modelLieuCollecte.LieuCollecte;
+import Projet_Collecte_Sang.dao_RDV.vueRDV.actionEvent;
+import Projet_Collecte_Sang.dao_RDV.controleurRDV.ControleurRDV;
+import Projet_Collecte_Sang.dao_RDV.modelRDV.RDV;
 
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
@@ -26,21 +26,27 @@ import javax.swing.JComboBox;
 import java.awt.event.*;
 import java.util.ArrayList;
 
-public class VueLieuCollecte extends JFrame implements actionEvent {
-	private ControleurLieuCollecte ctrLieuCollecte = ControleurLieuCollecte.getControleurLieuCollecte();
+public class VueRDV extends JFrame implements actionEvent {
+	private ControleurRDV ctrRDV = ControleurRDV.getControleurRDV();
 	private JPanel contentPane;
-	private JTextField txtNom;
-	private JTextField txtAdresse;
-	private JTextField txtTypelieu;
+	// private JTextField txtId_donneur;
+	// private JTextField txtId_utilisateur;
+	private JTextField txtdate_rdv;
+	private JTextField txtheure_rdv;
+	private JTextField txtetat_rdv;
+
 	private JTable table;
 
 	JButton btnAjouter = new JButton();
 	JButton btnModifier = new JButton();
 	JButton btnSuprimer = new JButton();
 	JButton btnLister = new JButton();
-	JComboBox<String> cmbNom = new JComboBox<>();
+	// JComboBox<String> cmbNom = new JComboBox<>();
 
-	public VueLieuCollecte() {
+	JComboBox<String> cmbId_donneur = new JComboBox<>();
+	JComboBox<String> cmbId_utilisateur = new JComboBox<>();
+
+	public VueRDV() {
 		action();
 		setBackground(new Color(240, 240, 240));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -52,7 +58,7 @@ public class VueLieuCollecte extends JFrame implements actionEvent {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		JLabel lblTitre = new JLabel("Mise à jour des Lieux de Collecte");
+		JLabel lblTitre = new JLabel("Mise à jour des Rendez-Vous");
 		lblTitre.setBackground(new Color(0, 128, 255));
 		lblTitre.setForeground(new Color(255, 255, 0));
 		lblTitre.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 30));
@@ -66,38 +72,38 @@ public class VueLieuCollecte extends JFrame implements actionEvent {
 		contentPane.add(paneChamps);
 		paneChamps.setLayout(null);
 
-		JLabel lblNom = new JLabel("Nom");
-		lblNom.setBounds(20, 7, 117, 19);
-		lblNom.setFont(new Font("Times New Roman", Font.BOLD, 12));
-		paneChamps.add(lblNom);
+		JLabel lbldate_rdv = new JLabel("Date-RDV");
+		lbldate_rdv.setBounds(20, 7, 117, 19);
+		lbldate_rdv.setFont(new Font("Times New Roman", Font.BOLD, 12));
+		paneChamps.add(lbldate_rdv);
 
-		txtNom = new JTextField();
-		txtNom.setBounds(142, 5, 198, 19);
-		lblNom.setLabelFor(txtNom);
-		paneChamps.add(txtNom);
-		txtNom.setColumns(10);
+		txtdate_rdv = new JTextField();
+		txtdate_rdv.setBounds(142, 5, 198, 19);
+		lbldate_rdv.setLabelFor(txtdate_rdv);
+		paneChamps.add(txtdate_rdv);
+		txtdate_rdv.setColumns(10);
 
-		JLabel lblAdresse = new JLabel("Adresse");
-		lblAdresse.setFont(new Font("Times New Roman", Font.BOLD, 12));
-		lblAdresse.setBounds(20, 159, 117, 19);
-		paneChamps.add(lblAdresse);
+		JLabel lblheure_rdv = new JLabel("Heure-RDV");
+		lblheure_rdv.setFont(new Font("Times New Roman", Font.BOLD, 12));
+		lblheure_rdv.setBounds(20, 159, 117, 19);
+		paneChamps.add(lblheure_rdv);
 
-		txtAdresse = new JTextField();
-		lblAdresse.setLabelFor(txtAdresse);
-		txtAdresse.setColumns(10);
-		txtAdresse.setBounds(142, 157, 198, 19);
-		paneChamps.add(txtAdresse);
+		txtheure_rdv = new JTextField();
+		lblheure_rdv.setLabelFor(txtheure_rdv);
+		txtheure_rdv.setColumns(10);
+		txtheure_rdv.setBounds(142, 157, 198, 19);
+		paneChamps.add(txtheure_rdv);
 
-		JLabel lblTypelieu = new JLabel("Type du Lieu");
-		lblTypelieu.setFont(new Font("Times New Roman", Font.BOLD, 12));
-		lblTypelieu.setBounds(20, 219, 117, 19);
-		paneChamps.add(lblTypelieu);
+		JLabel lbletat_rdv = new JLabel("Etat-RDV");
+		lbletat_rdv.setFont(new Font("Times New Roman", Font.BOLD, 12));
+		lbletat_rdv.setBounds(20, 219, 117, 19);
+		paneChamps.add(lbletat_rdv);
 
-		txtTypelieu = new JTextField();
-		lblTypelieu.setLabelFor(txtTypelieu);
-		txtTypelieu.setColumns(10);
-		txtTypelieu.setBounds(142, 217, 198, 19);
-		paneChamps.add(txtTypelieu);
+		txtetat_rdv = new JTextField();
+		lbletat_rdv.setLabelFor(txtetat_rdv);
+		txtetat_rdv.setColumns(10);
+		txtetat_rdv.setBounds(142, 217, 198, 19);
+		paneChamps.add(txtetat_rdv);
 
 		JPanel paneTable = new JPanel();
 		paneTable.setBackground(new Color(0, 128, 255));
@@ -116,7 +122,7 @@ public class VueLieuCollecte extends JFrame implements actionEvent {
 						{ null, null, null },
 				},
 				new String[] {
-						"Nom", "Adresse", "Type_Lieu"
+						"Date-RDV", "Heure-RDV", "Etat-RDV"
 				}));
 		table.getColumnModel().getColumn(2).setPreferredWidth(90);
 
@@ -150,7 +156,7 @@ public class VueLieuCollecte extends JFrame implements actionEvent {
 		btnLister.setBounds(757, 25, 158, 35);
 		contentPane.add(btnLister);
 
-		JLabel lblLieuCollecte = new JLabel("Chercher un Lieu de collecte");
+		JLabel lblLieuCollecte = new JLabel("Chercher un RDV");
 		lblLieuCollecte.setBackground(new Color(0, 128, 255));
 		lblLieuCollecte.setForeground(new Color(255, 255, 0));
 		lblLieuCollecte.setFont(new Font("Times New Roman", Font.BOLD, 18));
